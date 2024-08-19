@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Records</title>
+    <link rel="stylesheet" href="../static/css/attendance.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Attendance Records</h1>
+
+        <form method="GET" action="{{ url_for('attendance') }}" class="filter-form">
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" value="{{ request.args.get('start_date', '') }}">
+        
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" value="{{ request.args.get('end_date', '') }}">
+        
+            <label for="user_id">User ID:</label>
+            <input type="text" id="user_id" name="user_id" value="{{ request.args.get('user_id', '') }}">
+        
+            <button type="submit" class="btn btn-filter">Filter</button>
+        </form>
+
+        <table id="attendance-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Timestamp</th>
+                    <th>Attendance Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attendance in attendance %}
+                <tr>
+                    <td>{{ attendance.first_name }} {{ attendance.last_name }}</td>
+                    <!-- <td>{{ attendance.user_id }}</td> -->
+                    <td>{{ attendance.timestamp }}</td>
+                    <td>{{ attendance.attendance_type }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="../static/script.js"></script>
+</body>
+</html>
